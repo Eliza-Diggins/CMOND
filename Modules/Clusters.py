@@ -84,7 +84,7 @@ class Cluster():
 
         new_params = {param: convert_to_base_units(params[param]).value for param in params}
         unit_params = {param: convert_to_base_units(params[param]).unit for param in params}
-        log.info("CMOND:Clusters:Cluster:temp_fit:INFO: Converted params %s to %s in base units." % (
+        log.debug("CMOND:Clusters:Cluster:temp_fit:INFO: Converted params %s to %s in base units." % (
             params, new_params))
 
         if model == "VIKH":
@@ -117,7 +117,7 @@ class Cluster():
         # We are working in united values
         new_params = {param: convert_to_base_units(params[param]).value for param in params}
         unit_params = {param: convert_to_base_units(params[param]).unit for param in params}
-        log.info("CMOND:Clusters:Cluster:temp_fit:INFO: Converted params %s to %s in base units." % (
+        log.debug("CMOND:Clusters:Cluster:temp_fit:INFO: Converted params %s to %s in base units." % (
             params, new_params))
 
         if model == "VIKH":
@@ -147,7 +147,7 @@ class Cluster():
         :return:
         """
         # Intro logging
-        log.info("CMOND:Clusters:Cluster:dynamical_mass_fit_sym:INFO: Fitting mass to cluster %s."%self.name)
+        log.debug("CMOND:Clusters:Cluster:dynamical_mass_fit_sym:INFO: Fitting mass to cluster %s."%self.name)
 
         # Sanitizing
         if not self._has_density_profile or not self._has_temp_profile: # The required data are not there.
@@ -217,7 +217,7 @@ def convert_to_base_units(quantity:u.quantity.Quantity) -> u.quantity.Quantity:
             unit_string = unit_string.replace(base_unit,str(_CMOND_base_units[base_unit]))
             log.debug("CMOND:Clusters:convert_to_base_units:DEBUG: Unit string of %s is now %s."%(quantity,unit_string))
 
-    log.info("CMOND:Clusters:convert_to_base_units:INFO: Converted %s to %s"%(quantity,quantity.to(u.Unit(unit_string))))
+    log.debug("CMOND:Clusters:convert_to_base_units:INFO: Converted %s to %s"%(quantity,quantity.to(u.Unit(unit_string))))
     return quantity.to(u.Unit(unit_string)) # returning the correct quantity after conversion of the string.
 
 def read_cluster_csv(filename:str,mode:str ="VIKH"):

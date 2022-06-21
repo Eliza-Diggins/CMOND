@@ -22,7 +22,6 @@ def plot_temperature_profiles(clusters,
                               n=500,
                               indp_unit = u.kpc,
                               dep_unit = u.keV,
-                              outer_scale_factor=1.0,
                               scale="semilogx"
                               ):
     """
@@ -206,7 +205,6 @@ def plot_dynamical_mass_profiles(clusters,
                               n=500,
                               indp_unit=u.kpc,
                               dep_unit=u.solMass,
-                              outer_scale_factor=1.0,
                               scale="semilogx",
                               mode="NEWT"
                               ):
@@ -372,15 +370,14 @@ def plot_mond_newt_profile(cluster,r_min=None,r_max=None,indp_unit=u.kpc,scale="
             (r_array).to(C._CMOND_base_units["m"]).value)
     output_mond = sym.lambdify(sym.Symbol("r"), cluster.dynamical_mass_profile_mond, "numpy")(
             (r_array).to(C._CMOND_base_units["m"]).value)
-    #output_test = sym.lambdify(sym.Symbol("r"), cluster.test_unit, "numpy")(
-    #        (r_array).to(C._CMOND_base_units["m"]).value)
+
 
 
     corrected_output_newt = (output_newt * cluster._dynamical_mass_profile_newt_units).to(dep_unit).value
     corrected_output_mond = (output_mond * cluster._dynamical_mass_profile_mond_units).to(dep_unit).value
-    #corrected_output_test = (output_test * cluster._dynamical_mass_profile_mond_units).to(dep_unit).value
 
-    #ax1.plot(r_array,corrected_output_test)
+
+
     ax1.plot(r_array, corrected_output_mond, label="MOND")
     ax1.plot(r_array,corrected_output_newt,label="NEWT")
 
@@ -398,6 +395,5 @@ if __name__ == '__main__':
     import Modules.Clusters as C
 
     clusts = C.read_cluster_csv("C:\\Users\\13852\\PycharmProjects\\CMOND\\Datasets\\Vikhlinin.csv")
-    plot_dynamical_mass_profiles([clusts[0]])
-    plot_dynamical_mass_profiles([clusts[0]],mode="MOND")
-    plot_mond_newt_profile(clusts[0])
+    for clust in clusts:
+        plot_mond_newt_profile(clust)
