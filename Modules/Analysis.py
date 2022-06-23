@@ -94,18 +94,23 @@ def hernquist_profile(cluster: C.Cluster, mode: str = "Schmidt_Allen", h: u.Quan
 
 def get_baryonic_mass_profile(cluster:C.Cluster,bounds=None,gravitational_mode:str="NEWT",indep_unit=u.kpc,dep_unit=u.solMass,n=1000):
     """
-    Generates the BCG mass profile given the gas density and the hernquist parameters.
-    :param cluster: The cluster to generate the profile for.
-    :param bounds: The bounds to use when constructing the profile.
-    :return:
+    Generates the baryonic mass profile from the BCG profile and the gas density profile. This is largely an approximation.
+    :param cluster: The cluster to construct the profile for.
+    :param bounds: The bounds on the output array. Inputs should be [lower_bound,upper_bound]. Units are necessary.
+    :param gravitational_mode: The gravitational mode to use. Options are "MOND" or "NEWT".
+    :param indep_unit: The independent unit (a unit of distance).
+    :param dep_unit: The dependent unit (a unit of mass).
+    :param n: The number of points to sample in the array. default = 1000
+    :return: [r,M(<r)] where r is an array of r values, and M(<r) is the baryonic mass contained within r.
     """
     log.info("CMOND:Analysis:get_baryonic_mass_profile:INFO: Building baryonic mass profile for %s."%cluster.name)
 
+    ### Sanitizing the input ###
     if not(cluster._has_dynamical_mass_profile_newt and cluster._has_dynamical_mass_profile_mond):
         log.error("CMOND:Analysis:get_baryonic_mass_profile:ERROR: Cluster does not have the necessary mass profiles for completion.")
         return False
 
-    ### Building the array ###
+    ### Building the input array ###
     if not bounds: # The bounds are not manually specified, we will do it.
         bounds = [cluster.r_min.to(indep_unit),cluster.r_500.to(indep_unit)]
     else:
@@ -116,14 +121,18 @@ def get_baryonic_mass_profile(cluster:C.Cluster,bounds=None,gravitational_mode:s
     ### Computing hernquist profile ###
     h_profile = hernquist_profile(cluster,gravitational_mode=gravitational_mode)
 
+    ### Building numerical arrays from density and profile ###
     h_array = sym.lambdify(sym.Symbol('r'),h_profile[1],"numpy")(array.to(C._CMOND_base_units["m"]).value)
     gas_density = sym.lambdify(sym.Symbol('r'),cluster.density_profile,"numpy")(array.to(C._CMOND_base_units["m"]).value)
 
+    # Computing the integral
     density = ((h_array*h_profile[0])+(gas_density*cluster._density_profile_output_units)).to(dep_unit/(indep_unit**3))
 
     dr = (bounds[1]-bounds[0])/n
     dm = density.value*(4*np.pi*(array.value**2))*dr.value
-    return np.array([sum(dm[:i]) for i in range(len(array))])*dep_unit
+
+
+    return [array,np.array([sum(dm[:i]) for i in range(len(array))])*dep_unit]
 
 
 
