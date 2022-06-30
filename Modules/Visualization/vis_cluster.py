@@ -120,7 +120,7 @@ def plot_temperature_profiles(clusters,
                 try:
                     os.chdir(end_file)
                 except FileNotFoundError:
-                    os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                    os.chdir("/Graphics")
                     if os.path.isdir(clusters[0].name):
                         os.chdir(clusters[0].name)
                     else:
@@ -128,7 +128,7 @@ def plot_temperature_profiles(clusters,
                         os.chdir(clusters[0].name)
                 plt.savefig("Temperature_Profile_%s.png" % (clusters[0].name))
             else:
-                os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                os.chdir("/Graphics")
                 if os.path.isdir(clusters[0].name):
                     os.chdir(clusters[0].name)
                 else:
@@ -140,7 +140,7 @@ def plot_temperature_profiles(clusters,
                 try:
                     os.chdir(end_file)
                 except FileNotFoundError:
-                    os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                    os.chdir("/Graphics")
                     if os.path.isdir("ensemble"):
                         os.chdir("ensemble")
                     else:
@@ -149,7 +149,7 @@ def plot_temperature_profiles(clusters,
                 plt.savefig("Temperature_Profile_%s.png" % datetime.now().strftime(
                     '%m-%d-%Y_%H-%M-%S'))
             else:
-                os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                os.chdir("/Graphics")
                 if os.path.isdir("ensemble"):
                     os.chdir("ensemble")
                 else:
@@ -273,7 +273,7 @@ def plot_density_profiles(clusters,
                 try:
                     os.chdir(end_file)
                 except FileNotFoundError:
-                    os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                    os.chdir("/Graphics")
                     if os.path.isdir(clusters[0].name):
                         os.chdir(clusters[0].name)
                     else:
@@ -281,7 +281,7 @@ def plot_density_profiles(clusters,
                         os.chdir(clusters[0].name)
                 plt.savefig("Density_Profile_%s.png" % (clusters[0].name))
             else:
-                os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                os.chdir("/Graphics")
                 if os.path.isdir(clusters[0].name):
                     os.chdir(clusters[0].name)
                 else:
@@ -293,7 +293,7 @@ def plot_density_profiles(clusters,
                 try:
                     os.chdir(end_file)
                 except FileNotFoundError:
-                    os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                    os.chdir("/Graphics")
                     if os.path.isdir("ensemble"):
                         os.chdir("ensemble")
                     else:
@@ -302,7 +302,7 @@ def plot_density_profiles(clusters,
                 plt.savefig("Density_Profile_%s.png" % datetime.now().strftime(
                     '%m-%d-%Y_%H-%M-%S'))
             else:
-                os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                os.chdir("/Graphics")
                 if os.path.isdir("ensemble"):
                     os.chdir("ensemble")
                 else:
@@ -434,7 +434,7 @@ def plot_dynamical_mass_profiles(clusters,
                 try:
                     os.chdir(end_file)
                 except FileNotFoundError:
-                    os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                    os.chdir("/Graphics")
                     if os.path.isdir(clusters[0].name):
                         os.chdir(clusters[0].name)
                     else:
@@ -442,7 +442,7 @@ def plot_dynamical_mass_profiles(clusters,
                         os.chdir(clusters[0].name)
                 plt.savefig("Dynamical_Mass_Profile_%s.png" % (clusters[0].name))
             else:
-                os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                os.chdir("/Graphics")
                 if os.path.isdir(clusters[0].name):
                     os.chdir(clusters[0].name)
                 else:
@@ -454,7 +454,7 @@ def plot_dynamical_mass_profiles(clusters,
                 try:
                     os.chdir(end_file)
                 except FileNotFoundError:
-                    os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                    os.chdir("/Graphics")
                     if os.path.isdir("ensemble"):
                         os.chdir("ensemble")
                     else:
@@ -463,7 +463,7 @@ def plot_dynamical_mass_profiles(clusters,
                 plt.savefig("Dynamical_Mass_Profile_%s.png" % datetime.now().strftime(
                     '%m-%d-%Y_%H-%M-%S'))
             else:
-                os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                os.chdir("/Graphics")
                 if os.path.isdir("ensemble"):
                     os.chdir("ensemble")
                 else:
@@ -582,7 +582,7 @@ def plot_mond_newt_profile(cluster,r_min=None,r_max=None,indp_unit=u.kpc,scale="
             try:
                 os.chdir(end_file)
             except FileNotFoundError:
-                os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                os.chdir("/Graphics")
                 if os.path.isdir(cluster.name):
                     os.chdir(cluster.name)
                 else:
@@ -590,7 +590,7 @@ def plot_mond_newt_profile(cluster,r_min=None,r_max=None,indp_unit=u.kpc,scale="
                     os.chdir(cluster.name)
             plt.savefig("MOND_NEWT_Profile_%s.png" % (cluster.name))
         else:
-            os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+            os.chdir("/Graphics")
             if os.path.isdir(cluster.name):
                 os.chdir(cluster.name)
             else:
@@ -740,7 +740,7 @@ def plot_mass_profile(cluster,mode="Baryonic",bounds=None,indep_unit = u.kpc,dep
             try:
                 os.chdir(end_file)
             except FileNotFoundError:
-                os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                os.chdir("/Graphics")
                 if os.path.isdir(cluster.name):
                     os.chdir(cluster.name)
                 else:
@@ -748,7 +748,7 @@ def plot_mass_profile(cluster,mode="Baryonic",bounds=None,indep_unit = u.kpc,dep
                     os.chdir(cluster.name)
             plt.savefig("MassProfile_%s%%%s.png"%(cluster.name,gravitational_mode))
         else:
-            os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+            os.chdir("/Graphics")
             if os.path.isdir(cluster.name):
                 os.chdir(cluster.name)
             else:
@@ -867,7 +867,7 @@ def plot_residuals(clusters,save=True,bounds=None,end_file=None,gravitational_mo
                 try:
                     os.chdir(end_file)
                 except FileNotFoundError:
-                    os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                    os.chdir("/Graphics")
                     if os.path.isdir(clusters[0].name):
                         os.chdir(clusters[0].name)
                     else:
@@ -875,7 +875,7 @@ def plot_residuals(clusters,save=True,bounds=None,end_file=None,gravitational_mo
                         os.chdir(clusters[0].name)
                 plt.savefig("Residual_Mass_Profile_%s.png" % (clusters[0].name))
             else:
-                os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                os.chdir("/Graphics")
                 if os.path.isdir(clusters[0].name):
                     os.chdir(clusters[0].name)
                 else:
@@ -887,7 +887,7 @@ def plot_residuals(clusters,save=True,bounds=None,end_file=None,gravitational_mo
                 try:
                     os.chdir(end_file)
                 except FileNotFoundError:
-                    os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                    os.chdir("/Graphics")
                     if os.path.isdir("ensemble"):
                         os.chdir("ensemble")
                     else:
@@ -896,7 +896,7 @@ def plot_residuals(clusters,save=True,bounds=None,end_file=None,gravitational_mo
                 plt.savefig("Residual_Mass_Profile_%s.png" % datetime.now().strftime(
                     '%m-%d-%Y_%H-%M-%S'))
             else:
-                os.chdir("C:\\Users\\13852\\PycharmProjects\\CMOND\\Graphics")
+                os.chdir("/Graphics")
                 if os.path.isdir("ensemble"):
                     os.chdir("ensemble")
                 else:
@@ -918,7 +918,7 @@ if __name__ == '__main__':
     log.basicConfig(level=log.DEBUG)
     import Modules.Clusters as C
 
-    clusts = C.read_cluster_csv("C:\\Users\\13852\\PycharmProjects\\CMOND\\Datasets\\Vikhlinin.csv")
+    clusts = C.read_cluster_csv("/Datasets/Vikhlinin.csv")
     plot_residuals(clusts)
 """
     clusts = C.read_cluster_csv("C:\\Users\\13852\\PycharmProjects\\CMOND\\Datasets\\Vikhlinin.csv")
