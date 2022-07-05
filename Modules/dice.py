@@ -16,14 +16,20 @@ import astropy.units as u
 import astropy.constants as consts
 import pandas as pd
 import os
+import os.path
+import struct
+import sys
+import pynbody as pyn
+from tqdm import tqdm
 
 
 ### FUNCTIONS ###
-def read_rz_file(filename:str)->pd.DataFrame:
+def read_rz_file(filename:str):
     """
     Reads the rz file output from DICE and returns that data as a pandas dataframe.
     :param filename: The filename (path/filename) for the file in question.
     :return: Returns the full dataset as a dataframe.
+    :rtype: pd.DataFrame or bool
     """
     # intro logging
     log.debug("CMOND:dice:read_rz_file:DEBUG: Reading %s."%filename)
@@ -48,7 +54,8 @@ def read_rz_file(filename:str)->pd.DataFrame:
     return(dataframe)
 
 if __name__ == '__main__':
-    dat = read_rz_file(r"C:\Users\13852\PycharmProjects\CMOND\Datasets\DICE_IC\galaxy1.params.rz1")
+    dat = Snapshot(r"C:\Users\13852\PycharmProjects\CMOND\Datasets\DICE_IC\dice_merger.g2")
+    dat.to_ascii()
 
 
 
