@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import Modules.dice as DICE
-import tqdm
+from tqdm import tqdm
 
 
 try:
@@ -54,7 +54,7 @@ def plot_particles(filename, axes=None, echo=True, color_dict=None, sampling=10,
         data = pyn.load(filename)
 
         if echo:
-            print("DEBUG: Loaded %s: %s." % (filename, data))
+            log.debug("CMOND:Visualization:vis_dice:plot_particles:DEBUG: Loaded %s: %s." % (filename, data))
     except OSError:
         raise SyntaxError("The filename %s was not recognized, or was not found." % filename)
 
@@ -63,40 +63,40 @@ def plot_particles(filename, axes=None, echo=True, color_dict=None, sampling=10,
 
     # debug
     if echo:
-        print("DEBUG: Found %s familes: %s" % (len(families), families))
+        log.debug("CMOND:Visualization:vis_dice:plot_particles:DEBUG: Found %s familes: %s" % (len(families), families))
 
     # managing families
     if fams:
         families = [fam for fam in families if fam.name in fams]
         if echo:
-            print("DEBUG: Restricted families to %s." % families)
+            log.debug("CMOND:Visualization:vis_dice:plot_particles:DEBUG: Restricted families to %s." % families)
 
     # managing the color dictionary
     if not color_dict:
         if echo:
-            print("DEBUG: No color_dict found. Constructing.")
+            log.debug("CMOND:Visualization:vis_dice:plot_particles:DEBUG: No color_dict found. Constructing.")
 
         tmp_colors = get_random_color(len(families))
         color_dict = {families[i]: tmp_colors[i] for i in range(len(families))}
 
     else:
         if echo:
-            print("DEBUG: Found color_dict = %s" % color_dict)
+            log.debug("CMOND:Visualization:vis_dice:plot_particles:DEBUG: Found color_dict = %s" % color_dict)
 
     ### PLOTTING ###
     if not axes:
         if echo:
-            print("DEBUG: No axes specified. Creating axes.")
+            log.debug("CMOND:Visualization:vis_dice:plot_particles:DEBUG: No axes specified. Creating axes.")
 
         fig = plt.figure()
         axes = fig.add_subplot(111, projection='3d')
     else:
         if echo:
-            print("DEBUG: Axes inputted manually: %s." % axes)
+            log.debug("CMOND:Visualization:vis_dice:plot_particles:DEBUG: Axes inputted manually: %s." % axes)
 
     for family in families:  # plotting each family
         if echo:
-            print("DEBUG: Plotting %s particles. n=%s." % (family.name, len(data[family])))
+            log.debug("CMOND:Visualization:vis_dice:plot_particles:DEBUG: Plotting %s particles. n=%s." % (family.name, len(data[family])))
 
         pos_data = data[family]['pos']
 
@@ -142,24 +142,24 @@ def plot_density(filename,
     try:  # pull the data if it exists.
         data = pyn.load(filename)
     except OSError:  # Failed to find the data
-        print("ERROR: Failed to load the file %s." % filename)
+        log.error("CMOND:Visualization:vis_dice:plot_density:ERROR: Failed to load the file %s." % filename)
         return False
 
     ### Sanitizing ###
 
     # orientation
     if orientation not in ["xy", "yx", "zx", "xz", "zy", "yz"]:  # the orientation is invalid
-        print("ERROR: %s is not a valid orientation. Please select from %s." % (
+        log.error("CMOND:Visualization:vis_dice:plot_density:ERROR: %s is not a valid orientation. Please select from %s." % (
             orientation, ["xy", "yx", "zx", "xz", "zy", "yz"]))
     elif orientation in ["yx", "zx", "zy"]:
         orientation = orientation[1] + orientation[0]  # Simply reversing the orientation.
 
     # cross section
     if not isinstance(cross_section, (float, int)):  # the dtype is wrong.
-        print("ERROR: %s is of type %s, not type %s; therefore, it is not a valid choice of cross_section." % (
+        log.error("CMOND:Visualization:vis_dice:plot_density:ERROR: %s is of type %s, not type %s; therefore, it is not a valid choice of cross_section." % (
             cross_section, type(cross_section), float))
     if not isinstance(cross_height, (float, int)):  # the dtype is wrong.
-        print("ERROR: %s is of type %s, not type %s; therefore, it is not a valid choice of cross_height." % (
+        log.error("CMOND:Visualization:vis_dice:plot_density:ERROR: %s is of type %s, not type %s; therefore, it is not a valid choice of cross_height." % (
             cross_height, type(cross_height), float))
 
     ### Managing Fams ###
@@ -171,7 +171,7 @@ def plot_density(filename,
         fams = [fam.name for fam in families]
 
     if echo:
-        print("DEBUG: Familes found for %s: %s. %s are used." % (
+        log.debug("CMOND:Visualization:vis_dice:plot_density:DEBUG: Familes found for %s: %s. %s are used." % (
             filename, [i.name for i in families], [i.name for i in families if i.name in fams]))
 
     ### Constructing grid ###
@@ -200,7 +200,7 @@ def plot_density(filename,
                   ]
 
     if echo:
-        print("DEBUG: Bounds are computed to be %s:[%s,%s], %s:[%s,%s]" % (
+        log.debug("CMOND:Visualization:vis_dice:plot_density:DEBUG: Bounds are computed to be %s:[%s,%s], %s:[%s,%s]" % (
             orientation[0], bounds[0], bounds[1], orientation[1], bounds[2], bounds[3]))
 
     ## Constructing bounds ##
@@ -211,7 +211,7 @@ def plot_density(filename,
     matrix = np.zeros((n, n))
 
     if echo:
-        print("DEBUG: Constructed empty matrix of size %sx%s."%(n,n))
+        log.debug("CMOND:Visualization:vis_dice:plot_density:DEBUG: Constructed empty matrix of size %sx%s."%(n,n))
 
     or1 = ors[0]
     or2 = ors[1]
@@ -232,7 +232,7 @@ def plot_density(filename,
 
     if contours:
         if echo:
-            print("DEBUG: Contours being added with colormap: %s."%cont_cmap)
+            log.debug("CMOND:Visualization:vis_dice:plot_density:DEBUG: Contours being added with colormap: %s."%cont_cmap)
         # We are going to add contour lines
         axes.contour(d1s,d2s,np.log(matrix),cmap=cont_cmap) # add the contours
     else:
@@ -240,7 +240,7 @@ def plot_density(filename,
 
     ### Cleanup ###
     if echo:
-        print("DEBUG: Cleaning up...")
+        log.debug("CMOND:Visualization:vis_dice:plot_density:DEBUG: Cleaning up...")
 
     axes.set_title(r"Mass Distribution Profile From %s"%filename.split("/")[-1])
     axes.set_xlabel(r"%s [%s]"%(orientation[0],str(data["pos"].units)[-3:]))
@@ -259,7 +259,7 @@ def plot_rz_densities(filenames, bounds: list = None, resolution: int = 1,save=T
     :return: None
     """
     # intro logging
-    log.debug("CMOND:vis_dice:plot_rz_densities:DEBUG: Plotting density from %s with bounds %s." % (filenames, bounds))
+    log.debug("CMOND:Visualization:vis_dice:vis_dice:plot_rz_densities:DEBUG: Plotting density from %s with bounds %s." % (filenames, bounds))
 
     ### SANITY CHECKING ###
 
@@ -270,7 +270,7 @@ def plot_rz_densities(filenames, bounds: list = None, resolution: int = 1,save=T
     # Checking for false types
     if not isinstance(filenames, list):  # the filenames are not in a list at this point, something is wrong.
         log.error(
-            "CMOND:vis_dice:plot_rz_density:ERROR: %s is not a valid type for input 'filenames'. Please try again." % type(
+            "CMOND:Visualization:vis_dice:vis_dice:plot_rz_density:ERROR: %s is not a valid type for input 'filenames'. Please try again." % type(
                 filenames))
         return False
 
@@ -281,7 +281,7 @@ def plot_rz_densities(filenames, bounds: list = None, resolution: int = 1,save=T
 
         # logging
         log.error(
-            "CMOND:vis_dice:plot_rz_density:ERROR: Failed to find %s. Please check the location and spelling. Removing." % failed_files)
+            "CMOND:Visualization:vis_dice:vis_dice:plot_rz_density:ERROR: Failed to find %s. Please check the location and spelling. Removing." % failed_files)
     else:
         # Nothing is wring
         pass
@@ -292,7 +292,7 @@ def plot_rz_densities(filenames, bounds: list = None, resolution: int = 1,save=T
 
     FAILURE_COUNT = 0  # counter for failures.
     for file in filenames:  # search through all of the files
-        log.debug("CMOND:vis_dice:plot_rz_densities:DEBUG: Attempting to fetch data for %s." % file)
+        log.debug("CMOND:Visualization:vis_dice:vis_dice:plot_rz_densities:DEBUG: Attempting to fetch data for %s." % file)
 
         # reading the data
         temp_frame = DICE.read_rz_file(file)
@@ -300,10 +300,10 @@ def plot_rz_densities(filenames, bounds: list = None, resolution: int = 1,save=T
         if type(temp_frame) is not bool:  # The file was analyzed sucessfully
             dataframe = pd.concat([dataframe, temp_frame], ignore_index=True)
         else:
-            log.warning("CMOND:vis_dice:plot_rz_densities:WARNING: Failed to load data from %s. Passing." % file)
+            log.warning("CMOND:Visualization:vis_dice:vis_dice:plot_rz_densities:WARNING: Failed to load data from %s. Passing." % file)
 
     log.info(
-        "CMOND:vis_dice:plot_rz_densities:INFO: Finished data read. Sucesses: %s, Failures %s (%% %s). Dataframe:\n%s" % (
+        "CMOND:Visualization:vis_dice:vis_dice:plot_rz_densities:INFO: Finished data read. Sucesses: %s, Failures %s (%% %s). Dataframe:\n%s" % (
         len(filenames) - FAILURE_COUNT, FAILURE_COUNT, 100 * (FAILURE_COUNT / len(filenames)), dataframe.to_string()))
 
     ### MANIPULATION ###
@@ -364,6 +364,6 @@ def plot_rz_densities(filenames, bounds: list = None, resolution: int = 1,save=T
 
 if __name__ == '__main__':
     log.basicConfig(level=log.DEBUG)
-    plot_rz_densities([r"C:\Users\13852\PycharmProjects\CMOND\Datasets\DICE_IC\star_cloud.params.rz1",
-                       r"C:\Users\13852\PycharmProjects\CMOND\Datasets\DICE_IC\star_cloud.params.rz2"
+    plot_rz_densities([r"C:\Users\13852\PycharmProjects\CMOND:Visualization:vis_dice\Datasets\DICE_IC\star_cloud.params.rz1",
+                       r"C:\Users\13852\PycharmProjects\CMOND:Visualization:vis_dice\Datasets\DICE_IC\star_cloud.params.rz2"
                        ], resolution=2)
