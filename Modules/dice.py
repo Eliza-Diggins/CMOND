@@ -58,7 +58,8 @@ def dice_potential(filename:str,fams=None):
 
     families = [fam for fam in data.families if fam.name in fams] # restricting
 
-
+    ### COMPUTING ###
+    distance_array = np.sqrt(data["pos"][:,0]**2 + data["pos"][:,1]**2 + data["pos"][:,2]**2) # calculating the distance array.
 def read_rz_file(filename:str):
     """
     Reads the rz file output from DICE and returns that data as a pandas dataframe.

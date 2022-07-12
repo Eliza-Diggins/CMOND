@@ -36,7 +36,7 @@ def get_random_color(n):
 
 ### Functions ###
 
-def plot_particles(filename, axes=None, echo=True, color_dict=None, sampling=10, alpha=0.2, fams=None):
+def plot_particles(filename, axes=None, echo=True, color_dict=None, sampling=10, alpha=0.2, fams=None,size=0.01):
     """
     Plots the locations of the particles in the given file.
     :param filename: The filename to open.
@@ -104,7 +104,7 @@ def plot_particles(filename, axes=None, echo=True, color_dict=None, sampling=10,
         ys = [i[1] for i in pos_data[::sampling]]
         zs = [i[2] for i in pos_data[::sampling]]
 
-        axes.scatter(xs, ys, zs, color=color_dict[family], alpha=alpha, label=family.name)
+        axes.scatter(xs, ys, zs, color=color_dict[family], alpha=alpha, label=family.name,size=size)
 
     ### managing axes labels ###
     axes.set_ylabel("y (%s)" % data["pos"].units)
@@ -364,6 +364,4 @@ def plot_rz_densities(filenames, bounds: list = None, resolution: int = 1,save=T
 
 if __name__ == '__main__':
     log.basicConfig(level=log.DEBUG)
-    plot_rz_densities([r"C:\Users\13852\PycharmProjects\CMOND:Visualization:vis_dice\Datasets\DICE_IC\star_cloud.params.rz1",
-                       r"C:\Users\13852\PycharmProjects\CMOND:Visualization:vis_dice\Datasets\DICE_IC\star_cloud.params.rz2"
-                       ], resolution=2)
+    plot_density("")
